@@ -1,13 +1,13 @@
-import Hero from "@/components/sections/Hero";
-import About from "@/components/sections/About";
-import Contact from "@/components/sections/Contact";
+"use client";
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
-export default async function Page() {
-  return (
-    <main className="snap-y snap-mandatory overflow-y-auto scroll-smooth">
-      <Hero />
-      <About />
-      <Contact />
-    </main>
-  );
+export default function Page() {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push('/login');
+  }, [router]);
+
+  return <div>page</div>;
 }

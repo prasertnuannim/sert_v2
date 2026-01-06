@@ -12,7 +12,7 @@ const COOKIE_CANDIDATES = [
 async function readToken(req: NextRequest, secret: string) {
   let token = await getToken({ req, secret });
   if (token) return token;
-
+console.log("token>> ", token)
   for (const cookieName of COOKIE_CANDIDATES) {
     token = await getToken({
       req,
@@ -49,10 +49,10 @@ export async function middleware(req: NextRequest) {
 
   const token = await readToken(req, secret);
   const role = normalizeAccessRole(token?.role) ?? AccessRole.Guest;
-
   if (!matched) {
     if (pathname === "/" && role !== AccessRole.Guest) {
       const redirectPath = resolveRoleRedirectPath(role);
+     
       if (redirectPath && redirectPath !== "/") {
         return NextResponse.redirect(new URL(redirectPath, nextUrl.origin));
       }

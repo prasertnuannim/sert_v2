@@ -55,7 +55,10 @@ const enableWebAuthn = ["1", "true", "yes"].includes(
 
 const providers = (): NextAuthConfig["providers"] => {
   const providerList: NextAuthConfig["providers"] = [
-    GitHub,
+    GitHub({
+      clientId: process.env.GITHUB_CLIENT_ID!,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+    }),
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,

@@ -23,7 +23,7 @@ export const SocialSignInButton = ({
   const handleClick = () => {
     if (loading) return;
     setLoading(true);
-    signIn(provider);
+    signIn(provider, { callbackUrl: "/" });
   };
 
   return (

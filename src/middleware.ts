@@ -29,16 +29,10 @@ export async function middleware(req: NextRequest) {
   const { nextUrl } = req;
   const pathname = nextUrl.pathname;
 
-    // ✅ ปล่อย API, next assets, favicon ผ่าน
   if (
-    pathname.startsWith("/api/sensors") ||
     pathname.startsWith("/_next") ||
     pathname === "/favicon.ico"
   ) {
-    return NextResponse.next();
-  }
-
-   if (pathname.startsWith("/api/sensors/")) {
     return NextResponse.next();
   }
 

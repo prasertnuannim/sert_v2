@@ -28,7 +28,7 @@ export default function LoginForm() {
   return (
     <>
       <form action={formAction} className="space-y-1">
-        <p className="flex justify-center text-md text-black/30 font-bold">Login with Email</p>
+        <p className="flex justify-center text-md text-black/20 font-bold">Login with Email</p>
         <FormInput
           name="email"
           type="email"
@@ -59,7 +59,7 @@ export default function LoginForm() {
           <button
             type="button"
              onClick={() => setOpenRegister(true)}
-            className="hover:text-gray-400 text-gray-500 transition"
+            className="hover:text-gray-400 text-gray-500 transition text-sm"
           >
             Register here
           </button>

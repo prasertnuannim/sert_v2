@@ -57,7 +57,7 @@ export default function Sidebar({ profile }: { profile: SidebarProfile | null })
   return (
     <aside
       className={clsx(
-        "h-dvh sticky top-0 z-40 flex flex-col rounded-xl px-3",
+        "h-dvh sticky top-0 z-40 flex flex-col rounded-lg px-3",
         "bg-gray-800 text-white shadow-lg transition-all duration-500",
         open ? "w-64" : "w-20"
       )}
@@ -72,7 +72,7 @@ export default function Sidebar({ profile }: { profile: SidebarProfile | null })
         <Avatar
           className={clsx(
             "border border-white/20 bg-white",
-            open ? "h-[70px] w-[70px]" : "h-[48px] w-[48px]"
+            open ? "h-[70px] w-[70px]" : "h-12 w-12"
           )}
         >
           <AvatarImage src={avatarSrc} />

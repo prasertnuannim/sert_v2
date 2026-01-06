@@ -275,10 +275,10 @@ export function DataTable<
     if (isEditing) {
       return (
         <div className="flex gap-2 justify-center">
-          <button onClick={() => saveEdit(row.id)} className="text-green-600">
+          <button onClick={() => saveEdit(row.id)} className="text-green-600 cursor-pointer">
             <Save size={18} />
           </button>
-          <button onClick={cancelEdit} className="text-gray-600">
+          <button onClick={cancelEdit} className="text-gray-600 cursor-pointer">
             <X size={18} />
           </button>
         </div>
@@ -294,7 +294,7 @@ export function DataTable<
     return (
       <div className="flex gap-2 justify-center">
         {onUpdate && (
-          <button onClick={() => startEdit(row)} className="text-blue-600">
+          <button onClick={() => startEdit(row)} className="text-blue-600 cursor-pointer">
             <Pencil size={18} />
           </button>
         )}
@@ -302,7 +302,7 @@ export function DataTable<
         {onHardDelete && (
           <ConfirmDialog
             trigger={
-              <button className="text-red-600">
+              <button className="text-red-600 cursor-pointer">
                 <Trash2 size={18} />
               </button>
             }
@@ -359,7 +359,7 @@ export function DataTable<
                   <button
                     onClick={() => toggleSort(col.key, col.sortable)}
                     className={`inline-flex items-center gap-1 ${
-                      col.sortable ? "hover:underline" : "cursor-default"
+                      col.sortable ? "hover:underline cursor-pointer" : "cursor-default"
                     }`}
                   >
                     {col.header} {col.sortable && <SortIcon col={col.key} />}
@@ -405,7 +405,6 @@ export function DataTable<
                       const value = isEditing
                         ? (draft as T)[col.key]
                         : row[col.key];
-
                       return (
                         <td
                           key={`${row.id}-${String(col.key)}`}
@@ -520,9 +519,9 @@ function SkeletonCell({ width = "w-3/4" }: { width?: string }) {
     <div
       className={`
         h-4 ${width} rounded
-        bg-gradient-to-r
+        bg-linear-to-r
         from-gray-200 via-gray-300 to-gray-200
-        bg-[length:400px_100%]
+        bg-size-[400px_100%]
         animate-[shimmer_3s_ease-in-out_infinite]
       `}
     />

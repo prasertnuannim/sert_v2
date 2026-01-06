@@ -113,14 +113,13 @@ export default function AccountForm() {
         confirmDeleteTitle="Delete this user permanently?"
         confirmDeleteDescription="This action cannot be undone."
         confirmDeleteText="Delete"
-        confirmDeleteClassName="bg-red-600 text-white hover:bg-red-700"
+        confirmDeleteClassName="bg-red-600 text-white hover:bg-red-700 cursor-pointer"
         getConfirmDeleteProps={(row) => ({
           title: `Permanently delete “${row.name ?? row.email ?? row.id}”?`,
           description: "This record will be removed from the system forever.",
           confirmText: "Confirm delete",
         })}
       />
-
     </div>
   );
 }

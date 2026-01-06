@@ -12,24 +12,14 @@ export default function Navbar() {
   return (
     <div
       className={clsx(
-        "h-18 w-full flex items-center justify-between px-6 bg-gray-800 shadow-md sticky top-0 z-40 rounded-xl "
+        "h-18 w-full flex items-center justify-between px-6 bg-gray-800 shadow-md sticky top-0 z-40 rounded-lg "
       )}
     >
       <div className="flex items-center gap-3">
         {/* Toggle Button */}
         <button
           onClick={toggle}
-          className="
-    p-1 rounded-full
-    bg-white/10
-    border border-white/20
-    backdrop-blur-md
-    transition-all duration-300 ease-out
-    hover:bg-white/20
-    hover:scale-125
-    hover:shadow-[0_0_12px_rgba(255,255,255,0.35)]
-    active:scale-95
-  "
+          className="p-1 rounded-full bg-white/30 border border-white/20 backdrop-blur-md transition-all duration-300 ease-out hover:bg-white/20 hover:scale-125 hover:shadow-[0_0_12px_rgba(255,255,255,0.35)] active:scale-95"
         >
           <AnimatePresence mode="wait" initial={false}>
             <motion.div

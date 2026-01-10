@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import { prisma } from "@/server/db/auth/client";
 import type { CreateUserDto, UpdateUserDto } from "@/server/dto/user.dto";
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/server/db/auth/prisma/generated/client";
 
 const findRoleByName = async (role: string) =>
   prisma.role.findFirst({
@@ -54,6 +54,16 @@ const getAll = async ({ page, limit }: { page: number; limit: number }) => {
   };
 };
 
+const getById = async (userId: string) => {
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    include: { role: true },
+  });
+
+  if (!user) throw new Error("User not found");
+  return user;
+};
+
 const update = async (userId: string, dto: UpdateUserDto) => {
   const payload: Prisma.UserUpdateInput = {};
 
@@ -77,6 +87,7 @@ const remove = async (userId: string) =>
 
 export const userService = {
   create,
+  getById,
   getAll,
   update,
   delete: remove,

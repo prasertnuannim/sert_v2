@@ -125,6 +125,7 @@ export function DataTable<
 
   const [editingRowId, setEditingRowId] = useState<string | null>(null);
   const [draft, setDraft] = useState<Partial<T>>({});
+  const showActions = Boolean(renderActions || onUpdate || onHardDelete);
 
   // --- Search ---
   const filtered = useMemo(() => {
@@ -366,7 +367,9 @@ export function DataTable<
                   </button>
                 </th>
               ))}
-              <th className="border px-4 py-2 text-center">Actions</th>
+              {showActions && (
+                <th className="border px-4 py-2 text-center">Actions</th>
+              )}
             </tr>
           </thead>
 
@@ -388,12 +391,14 @@ export function DataTable<
                       />
                     </td>
                   ))}
-                  <td className="border px-4 py-2 text-center">
-                    <div className="flex justify-center gap-2">
-                      <SkeletonCell width="w-4" />
-                      <SkeletonCell width="w-4" />
-                    </div>
-                  </td>
+                  {showActions && (
+                    <td className="border px-4 py-2 text-center">
+                      <div className="flex justify-center gap-2">
+                        <SkeletonCell width="w-4" />
+                        <SkeletonCell width="w-4" />
+                      </div>
+                    </td>
+                  )}
                 </tr>
               ))
             ) : pageRows.length ? (
@@ -425,23 +430,25 @@ export function DataTable<
                       );
                     })}
 
-                    <td className="border px-4 py-2 text-center">
-                      {(renderActions ?? defaultRenderActions)({
-                        row,
-                        isEditing,
-                        startEdit,
-                        cancelEdit,
-                        saveEdit,
-                        hardDelete,
-                      })}
-                    </td>
+                    {showActions && (
+                      <td className="border px-4 py-2 text-center">
+                        {(renderActions ?? defaultRenderActions)({
+                          row,
+                          isEditing,
+                          startEdit,
+                          cancelEdit,
+                          saveEdit,
+                          hardDelete,
+                        })}
+                      </td>
+                    )}
                   </tr>
                 );
               })
             ) : (
               <tr>
                 <td
-                  colSpan={columns.length + 1}
+                  colSpan={columns.length + (showActions ? 1 : 0)}
                   className="text-center py-4 text-gray-500"
                 >
                   No results.

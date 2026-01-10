@@ -8,6 +8,8 @@ import { userMapper } from "@/server/mappers/user.mapper";
 import type { AccountActionResult, FullUser } from "@/types/account.type";
 import { AccessRole } from "@/server/services/auth/authService";
 import { PaginationDTO } from "@/server/dto/pagination.dto";
+import { auditLogService } from "@/server/services/auditLogService";
+import { AuditAction, AuditActorType, AuditModule } from "@/server/constants/audit";
 
 const toErrorMessage = (error: unknown) =>
   error instanceof Error ? error.message : "An unexpected error occurred";
@@ -43,9 +45,7 @@ const getUsers = async (
   if (!parsed.success) {
     return { success: false, error: parsed.error.errors[0].message };
   }
-
   const result = await userService.getAll(parsed.data);
-
   return {
     success: true,
     ...result,
@@ -53,24 +53,61 @@ const getUsers = async (
   };
 };
 
+// const updateUser = async (
+//   _sessionUserId: string | null,
+//   userId: string,
+//   data: unknown,
+// ): Promise<AccountActionResult<FullUser>> => {
+//   const parsed = UserDTO.Update.safeParse(data);
+//   if (!parsed.success) {
+//     return { success: false, error: parsed.error.errors[0].message };
+//   }
+//   try {
+//     const updated = await userService.update(userId, parsed.data);
+//     revalidatePath("/account");
+//     return { success: true, data: userMapper.toResponse(updated) };
+//   } catch (error: unknown) {
+//     return { success: false, error: toErrorMessage(error) };
+//   }
+// };
+
 const updateUser = async (
-  _sessionUserId: string | null,
+  sessionUserId: string | null,
   userId: string,
   data: unknown,
-): Promise<AccountActionResult<FullUser>> => {
+) => {
+  if (!sessionUserId) {
+    return { success: false, error: "Unauthorized" };
+  }
+
   const parsed = UserDTO.Update.safeParse(data);
   if (!parsed.success) {
     return { success: false, error: parsed.error.errors[0].message };
   }
 
-  try {
-    const updated = await userService.update(userId, parsed.data);
-    revalidatePath("/account");
-    return { success: true, data: userMapper.toResponse(updated) };
-  } catch (error: unknown) {
-    return { success: false, error: toErrorMessage(error) };
-  }
+  const actor = await userService.getById(sessionUserId);
+  const before = await userService.getById(userId);
+  const updated = await userService.update(userId, parsed.data);
+
+  await auditLogService.log({
+    actorId: sessionUserId,
+    actorType: AuditActorType.USER,
+    actorLabel: actor.email ?? undefined,
+
+    module: AuditModule.ACCOUNT,
+    action: AuditAction.UPDATE,
+
+    targetType: "User",
+    targetId: userId,
+
+    before: { name: before.name, role: before.role },
+    after: { name: updated.name, role: updated.role },
+  });
+
+  revalidatePath("/account");
+  return { success: true, data: userMapper.toResponse(updated) };
 };
+
 
 const deleteUser = async (
   _sessionUserId: string | null,

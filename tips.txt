@@ -3,3 +3,5 @@
 npx prisma generate --schema=src/server/db/sensor/prisma/schema.prisma
 
 npx prisma generate --schema=src/server/db/sensor/prisma/schema.prisma
+
+npx prisma studio

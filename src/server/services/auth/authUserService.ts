@@ -1,5 +1,5 @@
 import type { Account, User as NextAuthUser, User } from "next-auth";
-import type { User as PrismaUser, PrismaClient } from "@prisma/client";
+import type { User as PrismaUser, PrismaClient } from "@/server/db/auth/prisma/generated/client";
 import { prisma } from "@/server/db/auth/client";
 import { LoginCredentialsInput } from "@/types/auth.type";
 import bcrypt from "bcryptjs";

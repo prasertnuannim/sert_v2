@@ -1,7 +1,14 @@
 "use client";
 
 import { useState, type ReactNode, useRef, useEffect } from "react";
-import { Layers, ChevronDown, Power, Settings, User } from "lucide-react";
+import {
+  Layers,
+  ChevronDown,
+  Power,
+  Settings,
+  User,
+  ClipboardList,
+} from "lucide-react";
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
@@ -149,11 +156,17 @@ export default function Sidebar({ profile }: { profile: SidebarProfile | null })
                 </motion.div>
               )}
             </AnimatePresence>
+            <MenuItem
+              href="/audit"
+              icon={<ClipboardList size={20} />}
+              label="Audit Log"
+              active={pathname.startsWith("/audit")}
+            />
           </div>
         </div>
       ) : (
         /* ---------- COLLAPSED MODE ---------- */
-        <div className="relative flex flex-col items-center space-y-6 mt-4">
+        <div className="relative flex flex-col items-center space-y-1 mt-4">
           <IconBtn
             href="/account"
             icon={<User size={22} />}
@@ -200,6 +213,11 @@ export default function Sidebar({ profile }: { profile: SidebarProfile | null })
               </motion.div>
             )}
           </AnimatePresence>
+          <IconBtn
+            href="/audit"
+            icon={<ClipboardList size={22} />}
+            active={pathname.startsWith("/audit")}
+          />
         </div>
       )}
 

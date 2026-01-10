@@ -48,7 +48,9 @@ export {
   normalizeAccessRole,
 } from "@/lib/auth/accessRole";
 
-const adapter = PrismaAdapter(prisma);
+const adapter = PrismaAdapter(
+  prisma as unknown as Parameters<typeof PrismaAdapter>[0],
+);
 const enableWebAuthn = ["1", "true", "yes"].includes(
   String(process.env.NEXT_PUBLIC_ENABLE_PASSKEY ?? "").toLowerCase(),
 );

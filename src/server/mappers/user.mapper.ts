@@ -1,6 +1,6 @@
 import { UserDTO } from "@/server/dto/user.dto";
 import type { FullUser } from "@/types/account.type";
-import type { User, Role } from "@prisma/client";
+import type { User, Role } from "@/server/db/auth/prisma/generated/client";
 
 export class UserMapper {
   toResponse(user: User & { role?: Role | null }): FullUser {
